@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ou3ba4j8081i"]
+
+[ext_resource type="Script" uid="uid://b8cxiflv8vvok" path="res://assets/scripts/cactus_mut_1.gd" id="1_abrqm"]
+[ext_resource type="Texture2D" uid="uid://dm4u02bcad5vd" path="res://assets/images/cactusmut1.png" id="1_ggf8s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_abrqm"]
+size = Vector2(18, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d1fxg"]
+size = Vector2(28, 12)
+
+[node name="CactusMut1" type="Area2D"]
+script = ExtResource("1_abrqm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ggf8s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_abrqm")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, 17)
+shape = SubResource("RectangleShape2D_d1fxg")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

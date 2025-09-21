@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dsx3rbl6tw254"]
+
+[ext_resource type="Script" uid="uid://2m578wi58wvg" path="res://assets/scripts/player.gd" id="1_s027a"]
+[ext_resource type="Texture2D" uid="uid://dq7a2r7aec83x" path="res://assets/images/player.png" id="2_14505"]
+[ext_resource type="PackedScene" uid="uid://ciy0bxqkqpalv" path="res://assets/scenes/WASDController.tscn" id="3_14505"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wcc8"]
+size = Vector2(14, 28)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_s027a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_14505")
+
+[node name="WasdController" parent="." instance=ExtResource("3_14505")]
+
+[node name="ShootingCooldownTimer" type="Timer" parent="."]
+wait_time = 0.3
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_4wcc8")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_4wcc8")
+
+[connection signal="timeout" from="ShootingCooldownTimer" to="." method="_on_shooting_cooldown_timer_timeout"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

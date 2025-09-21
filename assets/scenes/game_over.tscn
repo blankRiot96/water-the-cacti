@@ -1,0 +1,85 @@
+[gd_scene load_steps=10 format=3 uid="uid://clh4hamwlfkbw"]
+
+[ext_resource type="Script" uid="uid://b7o2mqbqrllp5" path="res://assets/scripts/game_over.gd" id="1_3vif2"]
+[ext_resource type="Texture2D" uid="uid://drm5v0gkj55hy" path="res://assets/images/gameover-bg.png" id="2_8bpri"]
+[ext_resource type="Script" uid="uid://ba5uroacgtdbd" path="res://assets/scripts/animation_player.gd" id="4_8bpri"]
+[ext_resource type="FontFile" uid="uid://fft88v4k256a" path="res://assets/fonts/ultrakill.ttf" id="4_oe2dd"]
+[ext_resource type="Texture2D" uid="uid://c023u4lm0jgvg" path="res://assets/images/cactus.png" id="5_bitmv"]
+[ext_resource type="Script" uid="uid://c5ma36h0m5s" path="res://assets/scripts/rainbownum.gd" id="6_bitmv"]
+
+[sub_resource type="Animation" id="Animation_8bpri"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("rainbownum:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [null]
+}
+
+[sub_resource type="Animation" id="Animation_d2d1n"]
+resource_name = "rainbow"
+length = 5.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("rainbownum:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0666667, 1.1, 2.13333, 3.13333, 4.13333, 5.06667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 1, 1), Color(0.491325, 0.000170768, 0.491322, 1), Color(1, 0, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oe2dd"]
+_data = {
+&"RESET": SubResource("Animation_8bpri"),
+&"rainbow": SubResource("Animation_d2d1n")
+}
+
+[node name="GameOver" type="Node2D"]
+script = ExtResource("1_3vif2")
+
+[node name="gameoverbg" type="Sprite2D" parent="."]
+position = Vector2(600, 400)
+scale = Vector2(2, 2)
+texture = ExtResource("2_8bpri")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_oe2dd")
+}
+script = ExtResource("4_8bpri")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 577.0
+offset_top = 197.0
+offset_right = 840.0
+offset_bottom = 226.0
+theme_override_colors/font_color = Color(0.495048, 0.228824, 0, 1)
+theme_override_fonts/font = ExtResource("4_oe2dd")
+theme_override_font_sizes/font_size = 32
+text = "CACTII WATERED"
+
+[node name="cactusicon" type="Sprite2D" parent="."]
+position = Vector2(479, 212)
+texture = ExtResource("5_bitmv")
+
+[node name="rainbownum" type="Label" parent="."]
+offset_left = 504.0
+offset_top = 197.0
+offset_right = 560.0
+offset_bottom = 226.0
+theme_override_fonts/font = ExtResource("4_oe2dd")
+theme_override_font_sizes/font_size = 32
+text = "100"
+horizontal_alignment = 1
+script = ExtResource("6_bitmv")

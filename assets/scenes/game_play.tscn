@@ -1,0 +1,149 @@
+[gd_scene load_steps=16 format=3 uid="uid://dkf0n87wyxq6m"]
+
+[ext_resource type="Script" uid="uid://bdtgw73vtsvm8" path="res://assets/scripts/game_play.gd" id="1_160j0"]
+[ext_resource type="PackedScene" uid="uid://dsx3rbl6tw254" path="res://assets/scenes/player.tscn" id="1_w18kc"]
+[ext_resource type="Texture2D" uid="uid://c023u4lm0jgvg" path="res://assets/images/cactus.png" id="3_l5du7"]
+[ext_resource type="Script" uid="uid://dyo3g8e02evq2" path="res://assets/scripts/label.gd" id="4_80lhs"]
+[ext_resource type="FontFile" uid="uid://fft88v4k256a" path="res://assets/fonts/ultrakill.ttf" id="4_dgytf"]
+[ext_resource type="Script" uid="uid://cekp47c8d7o4s" path="res://assets/scripts/wave.gd" id="5_wfh61"]
+[ext_resource type="Texture2D" uid="uid://c744c553o2xyk" path="res://assets/images/bg.png" id="6_dhy7u"]
+[ext_resource type="Texture2D" uid="uid://bccgotn1mov4s" path="res://assets/images/dark_overlay.png" id="7_4mts6"]
+[ext_resource type="Texture2D" uid="uid://d0vhciodfa2b" path="res://assets/images/rate.png" id="7_sp4bk"]
+[ext_resource type="Texture2D" uid="uid://0cxp2d41t3hv" path="res://assets/images/sword.png" id="8_4mts6"]
+[ext_resource type="Script" uid="uid://l3sco7dlt5an" path="res://assets/scripts/rate.gd" id="9_dgytf"]
+[ext_resource type="Texture2D" uid="uid://75or4ovjg06n" path="res://assets/images/dir.png" id="9_mnuqh"]
+
+[sub_resource type="Animation" id="Animation_wfh61"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0174533]
+}
+
+[sub_resource type="Animation" id="Animation_80lhs"]
+resource_name = "wobble"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.197222, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dhy7u"]
+_data = {
+&"RESET": SubResource("Animation_wfh61"),
+&"wobble": SubResource("Animation_80lhs")
+}
+
+[node name="GamePlay" type="Node2D"]
+script = ExtResource("1_160j0")
+
+[node name="background" type="Sprite2D" parent="."]
+texture = ExtResource("6_dhy7u")
+
+[node name="Player" parent="." instance=ExtResource("1_w18kc")]
+
+[node name="Bullets" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Cactii" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="CactiiSpawnTimer" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[node name="Score" type="Label" parent="."]
+offset_left = -266.0
+offset_top = -189.0
+offset_right = -226.0
+offset_bottom = -155.0
+theme_override_colors/font_color = Color(0.0687983, 0.0687983, 0.0687983, 1)
+theme_override_fonts/font = ExtResource("4_dgytf")
+theme_override_font_sizes/font_size = 20
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-282, -178)
+rotation = -0.392699
+scale = Vector2(0.75, 0.75)
+skew = 0.0174533
+texture = ExtResource("3_l5du7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_dhy7u")
+}
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -151.0
+offset_top = -111.0
+offset_right = 151.0
+offset_bottom = -88.0
+text = "press left mouse button to shoot water"
+script = ExtResource("4_80lhs")
+
+[node name="Wave" type="Label" parent="."]
+offset_left = -38.0
+offset_top = -187.0
+offset_right = 33.0
+offset_bottom = -164.0
+theme_override_colors/font_color = Color(0.0191563, 0.0135454, 0.00613901, 1)
+theme_override_fonts/font = ExtResource("4_dgytf")
+theme_override_font_sizes/font_size = 20
+text = "Wave 0"
+script = ExtResource("5_wfh61")
+
+[node name="bgoverlay" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(1, 1, 1, 0.588235)
+texture = ExtResource("7_4mts6")
+
+[node name="rate" type="Button" parent="."]
+visible = false
+offset_left = 109.0
+offset_top = -59.0
+offset_right = 213.0
+offset_bottom = 77.0
+icon = ExtResource("7_sp4bk")
+script = ExtResource("9_dgytf")
+
+[node name="dmg" type="Button" parent="."]
+visible = false
+offset_left = -216.0
+offset_top = -60.0
+offset_right = -112.0
+offset_bottom = 76.0
+icon = ExtResource("8_4mts6")
+
+[node name="dir" type="Button" parent="."]
+visible = false
+offset_left = -51.0
+offset_top = -59.0
+offset_right = 53.0
+offset_bottom = 77.0
+icon = ExtResource("9_mnuqh")
+
+[connection signal="timeout" from="CactiiSpawnTimer" to="." method="_on_cactii_spawn_timer_timeout"]
+[connection signal="pressed" from="rate" to="." method="_on_rate_pressed"]
+[connection signal="pressed" from="dmg" to="." method="_on_dmg_pressed"]
+[connection signal="pressed" from="dir" to="." method="_on_dir_pressed"]
